@@ -1,13 +1,16 @@
 import requests
 import re
 
+# py3k compatibility
+xrange = range if not ( 'xrange' in dir(__builtins__) ) else xrange
+
 strip_image = lambda text: re.findall('src\="strips\/(\d+\.\w+)"', text)
 
 if __name__=="__main__":
     for i in xrange(1, 1397+1):
-      print "i: ", i
+      print ("i: ", i)
       r = requests.get('http://megatokyo.com/strip/{0}'.format(i))
-      print strip_image(r.text)
+      print (strip_image(r.text))
       strip_name = strip_image(r.text)[0]
       image_content = requests.get('http://megatokyo.com/strips/{0}'.format(strip_name))
       with open(strip_name, 'wb') as fd:
@@ -15,4 +18,4 @@ if __name__=="__main__":
               fd.write(chunk)
 
 
-      print "finished ", strip_name
+      print ("finished ", strip_name)

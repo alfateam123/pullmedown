@@ -9,7 +9,7 @@ def store(url, name):
 	with open(name, 'wb') as fd:
 		for chunk in image_content.iter_content(1024*(10**6)):
 			fd.write(chunk)
-	print url
+	print (url)
 
 def imguralbum(url, opt_store=True):
 	html = requests.get(url).text
@@ -35,5 +35,5 @@ if __name__ == "__main__":
 		}
 	for rx in rxs:
 		if re.search(rx, url):
-			#print "gotcha!", rx, url
+			#print ("gotcha!", rx, url)
 			rxs[rx](url)

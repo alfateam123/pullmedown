@@ -16,12 +16,12 @@ def getformat(fname):
 def docbz(url, name):
 	with ZipFile(name+".cbz", "w") as ebook:
 		nameslist = imgur.imguralbum(url, True)
-		print len(nameslist)
+		print (len(nameslist))
 		counter=1
 		try:
 			zeroes = int(log(len(nameslist))/log(10))+1 #how many leading zeroes?
 		except ValueError: #math domain error, 'cause len(nameslist)=0
-			docbz(re.sub("#\d+$", "", url)+"/layout/blog", name)
+			docbz(re.sub("#\d+$", "", url)+"/layout/blog", name) #force "blog" layout
 		for link in nameslist:
 			newname = str(format(counter, zeroes))+getformat(link)
 			copy2(link, newname)

@@ -22,10 +22,9 @@ if __name__ == "__main__":
 					]
 			zeroes = int(log(len(files))/log(10))+1 #how many leading zeroes?
 			for file_ in files:
-				#print file_
+				#print (file_)
 				shutil.copy(os.path.join(path, file_), format(counter, zeroes)+getformat(file_))
-				if file_.startswith("Kage"):
-					ebook.write(format(counter, zeroes)+getformat(file_))
+				ebook.write(format(counter, zeroes)+getformat(file_))
 				os.remove(format(counter, zeroes)+getformat(file_))
-				if file_.startswith("Kage"): counter += 1
+				counter += 1
 			counter = 1

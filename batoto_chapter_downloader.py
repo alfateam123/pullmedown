@@ -1,6 +1,9 @@
 import os
 from sys import argv
 
+# python3k compatibility
+xrange = range if not ( 'xrange' in dir(__builtins__) ) else xrange
+
 def numberize(n, k=6):
    return '0'*(k-len(str(n)))+str(n)
 
