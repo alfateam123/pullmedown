@@ -12,10 +12,7 @@ def store(url, pathname, overwrite=True):
 
 def get_page(url, is_json=False, method="get", parameters=None):
     try:
-        r = {
-	      "get" : requests.get,
-              "post": requests.post
-	}[method.lower()](url, data=parameters)
+        r = {"get" : requests.get, "post": requests.post}[method.lower()](url, data=parameters)
     except KeyError:
         raise ValueError("method passed is not GET or POST")
     return r.json() if is_json else r.text
