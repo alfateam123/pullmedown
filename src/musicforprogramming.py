@@ -1,33 +1,36 @@
 #!/usr/bin/env python
-import utils
-import re
-import sys
+import utils, re, argparse
 
 def get_episodes():
-	page = utils.get_page("http://musicforprogramming.net/")
-	#removing [u'c=aesthetic', u'c=credits', u'c=donate', u'c=manifesto', u'c=p']
-	#as, obviously, they're _not_ episodes.
-	return re.findall(r"\/?c=\w+", page)[:-5]
+    page = utils.get_page("http://musicforprogramming.net/")
+    #removing [u'c=aesthetic', u'c=credits', u'c=donate', u'c=manifesto', u'c=p']
+    #as, obviously, they're _not_ episodes.
+    return re.findall(r"\/?c=\w+", page)[:-5]
 
 def download_episode(number):
-	try:
-		download_episode(get_episodes()[(number.real)-1])
-	except AttributeError: #no .real => is _not_ an integer
-		page = utils.get_page("http://musicforprogramming.net/?{0}".format("c="+number if not number.startswith("c") else number))
-		url, songname = re.findall(r"(http:\/\/datashat\.net\/(music_for_programming_.+\.mp3))\"", page)[0]
-		print( url, songname )
-		utils.store(url, songname, overwrite=False)
+    try:
+        download_episode(get_episodes()[(number.real)-1])
+    except AttributeError: #no .real => is _not_ an integer
+        page = utils.get_page("http://musicforprogramming.net/?{0}".format("c="+number if not number.startswith("c") else number))
+        url, songname = re.findall(r"(http:\/\/datashat\.net\/(music_for_programming_.+\.mp3))\"", page)[0]
+        print(url, songname)
+        utils.store(url, songname, overwrite=False)
 
 def download_all():
-	for i in get_episodes():
-		download_episode(i)
+    for i in get_episodes():
+        download_episode(i)
 
 if __name__ == '__main__':
-	if sys.argv[1] == '--dump':
-		download_all()
-	elif sys.argv[1] == '--number':
-		print( "actually, {0} episodes of Music for Programming have been released".format(len(get_episodes())) )
-	elif sys.argv[1] == '--last':
-		download_episode(len(get_episodes()))
-	else:
-		download_episode(int(sys.argv[1]))
+    parser = argparse.ArgumentParser(description='musicForProgramming() downloader')
+    parser.add_argument('action', metavar='action', nargs='?', help='Action (dump, list, download)')
+    parser.add_argument('number', metavar='number', nargs='?', help='Issue to be downloaded with the "download" action')
+    args = vars(parser.parse_args())
+
+    if args['action'] == 'dump':
+        download_all()
+    elif args['action'] == 'list':
+        print("{0} episodes of Music for Programming have been released".format(len(get_episodes())))
+    elif args['action'] == 'download' and args['number']:
+        download_episode(int(args['number']))
+    else:
+        print('Sounds like you did something wrong... try -h')
