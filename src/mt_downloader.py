@@ -1,6 +1,5 @@
-import requests
-import re
-import utils
+#!/usr/bin/env python
+import requests, re, utils
 
 """
 Downloader for MegaTokyo webcomic.
@@ -16,7 +15,7 @@ def last_comic(download=True, return_number=False):
     print (strip_image(r.text))
     strip_number = int(strip_image(r.text)[0][:-4]) #removing .png || .gif
     if download:
-        dump_single(strip_number, image_format=strip_image(r.text)[0][-4:]) 
+        dump_single(strip_number, image_format=strip_image(r.text)[0][-4:])
     if return_number:
         return strip_number
 
@@ -36,4 +35,3 @@ def dump_whole():
 if __name__=="__main__":
     print ("last comic number is: ", last_comic(download=False, return_number=True))
     dump_whole();
-

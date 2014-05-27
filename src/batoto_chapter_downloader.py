@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 from sys import argv
 
@@ -5,7 +6,7 @@ from sys import argv
 xrange = range if not ( 'xrange' in dir(__builtins__) ) else xrange
 
 def numberize(n, k=6):
-   return '0'*(k-len(str(n)))+str(n)
+    return '0'*(k-len(str(n)))+str(n)
 
 image_path, number = argv[1:]
 
