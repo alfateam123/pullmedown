@@ -1,3 +1,4 @@
+#!/usr/bin/eng python
 import requests
 import re
 import imgur_downloader as imgur
