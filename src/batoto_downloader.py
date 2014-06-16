@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import requests, re
+import requests, re, utils
+import sys
 
 next_and_img = lambda req_text: re.findall("(.+)\n.+\<img id=\"comic_page\" (.+)\>", req_text, re.MULTILINE)[0]
 
@@ -10,18 +11,15 @@ img_format = lambda imglink: re.findall("\.\w+$", imglink)[0]
 
 if __name__=="__main__":
     found_next = True
-    link = "http://www.batoto.net/read/_/181322/kagerou-daze_chspecial_by_gei-manga"
+    link = sys.argv[1] #"http://www.batoto.net/read/_/181322/kagerou-daze_chspecial_by_gei-manga"
     while found_next:
         print ("muh link: ", link)
-        r=requests.get(link)
+        text = utils.get_page(link)
         #print ("debug: ", next_and_img(r.text))
-        nexttag, imgtag = next_and_img(r.text)
+        nexttag, imgtag = next_and_img(text)
         link = next_link(nexttag)
         print ("next link is: ", link)
         title, imagelink = alt_tag(imgtag), img_link(imgtag)
         print ("title is", title, "imagelink is: ", imagelink)
         print ("debug: ",  re.findall("\.\w+$", imagelink))
-        image_content = requests.get(imagelink)
-        with open(title+img_format(imagelink), 'wb') as fd:
-            for chunk in image_content.iter_content(1024*1000):
-            fd.write(chunk)
+        utils.store(imagelink, title+img_format(imagelink), overwrite=False)
