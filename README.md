@@ -18,6 +18,9 @@ Music
 Video
 * hak5.org
 
+Audio podcasts
+* digitalia.fm
+
 ### U g0+ pr0x1e5? ###
 Yup, br0! just configure the `.proxies` file.
 
@@ -29,4 +32,5 @@ Uhm. Before filling an issue, try to play with `.proxies` file, especially the `
 
 ### Dependencies ###
 This collection is meant to run on both py2 and py3k.
-The only dependency is the Requests library from Kenneth Reitz (you can find it on github, or in the Cheese Shop)
+The only necessary dependency is the Requests library from Kenneth Reitz (you can find it on github, or in the Cheese Shop).  
+You may need to install feedparser (find it on PyPI or ask pip) for the downloaders that need RSS feeds.
