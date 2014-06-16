@@ -18,9 +18,9 @@ if __name__ == "__main__":
             files = [re.sub("Page_0(\d)", r"Page_\1", file_) for file_ in sorted([re.sub("Page_(\d)_", r"Page_0\1_", file_) for file_ in files])]
             zeroes = int(log(len(files))/log(10))+1 #how many leading zeroes?
             for file_ in files:
-                #print (file_)
+                print (file_)
                 shutil.copy(os.path.join(path, file_), format(counter, zeroes)+getformat(file_))
                 ebook.write(format(counter, zeroes)+getformat(file_))
                 os.remove(format(counter, zeroes)+getformat(file_))
                 counter += 1
-                counter = 1
+            counter = 1
