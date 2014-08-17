@@ -6,7 +6,7 @@ next_and_img = lambda req_text: re.findall("(.+)\n.+\<img id=\"comic_page\" (.+)
 
 next_link = lambda next_tag: re.findall("href=\"(.+)\"", next_tag)[0]
 img_link = lambda img_tag: re.findall("src=\"(.+\.\w+)\" ", img_tag)[0]
-alt_tag = lambda img_tag: re.findall("alt=\"([\w\s-]+)", img_tag)[0].replace(" ", "_")
+alt_tag = lambda img_tag: re.findall("alt=\"([()\w\s-]+)", img_tag)[0].replace(" ", "_")
 img_format = lambda imglink: re.findall("\.\w+$", imglink)[0]
 
 if __name__=="__main__":
