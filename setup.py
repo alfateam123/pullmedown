@@ -15,7 +15,7 @@ setup(
     description='downloadin\' all day long',
     long_description=LONG_DESCRIPTION,
     install_requires=[
-       "click"
+       "click", "requests"
     ],
     classifiers=[
     "Development Status :: 3 - Alpha",
