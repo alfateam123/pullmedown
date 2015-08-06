@@ -15,7 +15,7 @@ setup(
     description='downloadin\' all day long',
     long_description=LONG_DESCRIPTION,
     install_requires=[
-       "click", "requests"
+       "click", "requests", "feedparser"
     ],
     classifiers=[
     "Development Status :: 3 - Alpha",
@@ -28,6 +28,9 @@ setup(
         'pullmedown=pullmedown:main'
       ]
     },
-
+    extras_require = {
+        #'dev': ['check-manifest'],
+        'test': ['nose','responses'],
+    },
     test_suite="tests"
 )

@@ -18,4 +18,12 @@ def musicforprogramming(list_albums, number, download_all):
     if list_albums:
         MFPDownloader().list_albums()
         return
-    raise NotImplementedError("you still need to wait for --number and --download-all")
+    #raise NotImplementedError("you still need to wait for --number and --download-all")
+    if (number!=0) and download_all:
+        print("asking for all albums and a single one makes no sense")
+        return
+
+    if download_all:
+        MFPDownloader().download_all()
+    else:
+        MFPDownloader().download_episode(number)
