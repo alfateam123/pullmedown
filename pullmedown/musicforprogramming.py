@@ -4,6 +4,7 @@ from .utils import get_page, store
 import feedparser
 from collections import namedtuple
 from . import main
+import click
 
 MFPAlbum = namedtuple("MFPAlbum", "title link")
 
