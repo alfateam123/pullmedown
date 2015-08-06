@@ -29,3 +29,4 @@ def main():
 #        MFPDownloader().download_episode(number)
 
 from .musicforprogramming import musicforprogramming
+from .fakku import fakku
