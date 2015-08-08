@@ -2,6 +2,10 @@ from os.path import exists
 import requests
 import json
 
+def pad(num, zeroes):
+    conv = str(num)
+    return conv.rjust(zeroes).replace(" ", "0")
+
 class UrlNotFoundError(Exception):
     pass
 
