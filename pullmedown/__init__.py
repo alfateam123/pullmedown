@@ -31,3 +31,4 @@ def main():
 from .musicforprogramming import musicforprogramming
 from .fakku import fakku
 from .generate_cbz import generatecbz
+from .hak5down import hak5
