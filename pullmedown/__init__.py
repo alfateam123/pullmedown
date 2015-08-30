@@ -3,10 +3,16 @@ from __future__ import print_function
 import click
 import sys
 #from .musicforprogramming import MusicForProgrammingDownloader as MFPDownloader
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 @click.group()
 def main():
-    """oh hi"""
+    """
+    A downloader for a lot of web services.
+
+    A list of the supported services follows:
+    """
     pass
 
 
@@ -32,3 +38,4 @@ from .musicforprogramming import musicforprogramming
 from .fakku import fakku
 from .generate_cbz import generatecbz
 from .hak5down import hak5
+from .imgur_downloader import imgur
