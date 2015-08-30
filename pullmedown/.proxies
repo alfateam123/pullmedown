@@ -1,4 +1,0 @@
-{
-	"http": "http://user:password!@proxy.address:8081",
-	"use_useragent": true
-}
