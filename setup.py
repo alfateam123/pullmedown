@@ -30,7 +30,7 @@ setup(
     },
     extras_require = {
         #'dev': ['check-manifest'],
-        'test': ['pexpect', 'lettuce'],
+        'test': ['pexpect', 'lettuce', 'six'],
     },
     test_suite="tests"
 )

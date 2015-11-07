@@ -14,12 +14,14 @@ except ImportError:
 class FakkuParser(HTMLParser):
 
     MOMOKA_THUMB_OF_NOTFOUND = "//t.fakku.net/assets/fakku-momoka-thumb.png"
+    FAKKU_BOOKS = "//store.fakku.net/"
 
     def __init__(self):
         HTMLParser.__init__(self)
         self.fakku_inside_thumbs = False
         self.fakku_images = list()
         self.fakku_twitter_image = ""
+        self.fakku_type = None
 
     def convert_thumb_url(self, thumb_url):
         # THUMB: //t.fakku.net/images/manga/i/[Taniguchi-san]_Original_Work_-_INSERT_LEVEL_2_Virginity_Thief/thumbs/001.thumb.jpg
@@ -36,8 +38,13 @@ class FakkuParser(HTMLParser):
                 logging.debug("found meta: {0}".format(self.fakku_twitter_image))
                 if self.fakku_twitter_image.endswith(self.MOMOKA_THUMB_OF_NOTFOUND):
                     self.fakku_twitter_image = ""
+                    self.fakku_type = "NOTFOUND"
                     logging.debug("oh wait, that's the 404 image. sigh.")
-                    #raise ValueError("the given URL is not accessible or does not exist.")
+                    #raise ValueErrori("the given URL is not accessible or does not exist.")
+                elif self.FAKKU_BOOKS in self.fakku_twitter_image:
+                    self.fakku_twitter_image = ""
+                    self.fakku_type = "FAKKUBOOK"
+                    logging.debug("it's a book!")
 
         if tag == "div":
             if "id" in attrs and attrs["id"] == "thumbs":
@@ -82,7 +89,11 @@ def download(doujin_url):
         except UrlNotFoundError:
             pass
     else:
-        print("could not find enough information to download the doujin you asked for.")
+        messages = {
+            "NOTFOUND": "could not find enough information to download the doujin you asked for.",
+            "FAKKUBOOK": "this is a Fakku Book. Throw some money to the screen, maybe it'll work :^"
+        } 
+        print(messages[fp.fakku_type])
 
 
 @main.command()

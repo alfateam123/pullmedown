@@ -1,9 +1,26 @@
-from lettuce import step, world
+from lettuce import step, world, before
 import pexpect
+import os
+import six
 
 
 def create_fakku_process(url):
     return pexpect.spawn("pullmedown", args=["fakku", url])
+
+
+def retrieve_images(folder="."):
+    _, _, files = six.next(os.walk(folder))
+    return [file_ for file_ in files if os.path.splitext(file_)[-1] == ".jpg"]
+
+
+def number_of_images(number, folder="."):
+    return len(retrieve_images(folder)) == number
+
+
+@before.each_scenario
+def clean_images(scenario):
+    for image_ in retrieve_images():
+        os.remove(image_)
 
 
 @step(u'Given I want to download (.+)')
@@ -14,7 +31,7 @@ def given_i_want_to_download_(step, url):
 @step(u'When I download it')
 def when_i_download_it(step):
     try:
-        world.fakku_proc.expect(pexpect.EOF, timeout=8)
+        world.fakku_proc.expect(pexpect.EOF, timeout=30)
         assert True
     except pexpect.TIMEOUT:
         assert False, "pullmedown looped"
@@ -22,6 +39,15 @@ def when_i_download_it(step):
 
 @step(u'Then pullmedown says it cannot find it')
 def then_pullmedown_says_it_cannot_find_it(step):
-    lines = [line for line in world.fakku_proc.before.splitlines()]
+    lines = world.fakku_proc.before.splitlines()
     assert ("could not find enough information to download"
             " the doujin you asked for." in lines[-1])
+
+@step(u'Then pullmedown says it\'s a book')
+def then_pullmedown_says_its_a_book(step):
+    lines = world.fakku_proc.before.splitlines()
+    assert ("this is a Fakku Book" in lines[-1])
+
+@step(u'Then (\d+) images have been downloaded')
+def then_at_least_one_image_have_been_downloaded(step, number):
+    assert number_of_images(int(number)), "only {} images were downloaded instead".format(len(retrieve_images()))
