@@ -50,6 +50,11 @@ class FakkuParser(HTMLParser):
             if "id" in attrs and attrs["id"] == "thumbs":
                 self.fakku_inside_thumbs = True
 
+            if "id" in attrs and attrs["id"] == "account-form":
+                self.fakku_twitter_image = ""
+                self.fakku_type = "SUBSCRIPTION"
+                logging.debug("subscription required")
+
         if self.fakku_inside_thumbs:
             if tag == "img" and attrs['class'] == "thumb":
 
@@ -91,7 +96,8 @@ def download(doujin_url):
     else:
         messages = {
             "NOTFOUND": "could not find enough information to download the doujin you asked for.",
-            "FAKKUBOOK": "this is a Fakku Book. Throw some money to the screen, maybe it'll work :^"
+            "FAKKUBOOK": "this is a Fakku Book. Throw some money to the screen, maybe it'll work :^",
+            "SUBSCRIPTION": "you have to subscribe in order to read this content."
         } 
         print(messages[fp.fakku_type])
 

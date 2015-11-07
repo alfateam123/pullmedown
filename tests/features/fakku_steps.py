@@ -51,3 +51,8 @@ def then_pullmedown_says_its_a_book(step):
 @step(u'Then (\d+) images have been downloaded')
 def then_at_least_one_image_have_been_downloaded(step, number):
     assert number_of_images(int(number)), "only {} images were downloaded instead".format(len(retrieve_images()))
+
+@step(u'Then pullmedown says you have to subscribe')
+def then_pullmedown_says_you_have_to_subscribe(step):
+    lines = world.fakku_proc.before.splitlines()
+    assert ("subscribe" in lines[-1])

@@ -6,11 +6,11 @@ with open("README.md") as f:
 
 setup(
     name='pullmedown',
-    version='0.0.1',
+    version='0.0.2',
     author='alfateam123',
     author_email='alfateam123@gmail.com',
     packages=['pullmedown'],
-    url='http://orion.wasp.ovh/winterthediplomat/pullmedown',
+    url='http://rigel.tehga.me/gogs/winterthediplomat/pullmedown',
     #license='LICENSE.txt',
     description='downloadin\' all day long',
     long_description=LONG_DESCRIPTION,

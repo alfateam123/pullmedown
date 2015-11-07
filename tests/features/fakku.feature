@@ -22,3 +22,8 @@ Feature: download from fakku.net
        Given I want to download https://www.fakku.net/manga/curiosity-xxxed-the-cat-english
        When I download it
        Then pullmedown says it's a book
+
+    Scenario: Fakku Subscription
+       Given I want to download https://www.fakku.net/manga/tale-of-a-couple-5-seconds-after-confession-english
+       When I download it
+       Then pullmedown says you have to subscribe
