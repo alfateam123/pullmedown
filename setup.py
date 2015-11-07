@@ -6,7 +6,7 @@ with open("README.md") as f:
 
 setup(
     name='pullmedown',
-    version='0.0.2',
+    version='0.0.3',
     author='alfateam123',
     author_email='alfateam123@gmail.com',
     packages=['pullmedown'],
@@ -30,7 +30,7 @@ setup(
     },
     extras_require = {
         #'dev': ['check-manifest'],
-        'test': ['pexpect', 'lettuce', 'six'],
+        'test': ['pexpect', 'aloe', 'six'],
     },
     test_suite="tests"
 )

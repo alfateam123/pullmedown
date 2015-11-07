@@ -1,4 +1,5 @@
-from lettuce import step, world, before
+#from lettuce import step, world, before
+from aloe import step, world, before
 import pexpect
 import os
 import six
@@ -17,8 +18,9 @@ def number_of_images(number, folder="."):
     return len(retrieve_images(folder)) == number
 
 
-@before.each_scenario
-def clean_images(scenario):
+#@before.each_scenario
+@before.each_example
+def clean_images(scenario, outline, step):
     for image_ in retrieve_images():
         os.remove(image_)
 

@@ -1,1 +1,2 @@
-lettuce tests/
+pip install -e ".[test]"
+aloe
