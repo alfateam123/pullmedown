@@ -17,7 +17,7 @@ Feature: download from fakku.net
        #Given I want to download https://www.fakku.net/doujinshi/the-commanders-submission-english
        Given I want to download https://www.fakku.net/doujinshi/you-actually-want-to-do-it-right-english 
        When I download it
-       Then 39 images have been downloaded
+       Then 17 images have been downloaded
 
     Scenario: Fakku Book
        Given I want to download https://www.fakku.net/manga/curiosity-xxxed-the-cat-english
