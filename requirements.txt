@@ -1,0 +1,1 @@
+git+http://github.com/koterpillar/aloe.git#egg=aloe
