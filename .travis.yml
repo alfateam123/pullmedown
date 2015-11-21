@@ -9,4 +9,4 @@ install:
   - pip install -e ".[test]"  --upgrade
 # command to run tests
 script:
-  - aloe tests/
+  - aloe tests/ --verbose
