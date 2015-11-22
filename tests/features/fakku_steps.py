@@ -20,7 +20,7 @@ def number_of_images(number, folder="."):
 
 @before.each_scenario
 #@before.each_example
-def clean_images(scenario, outline, step):
+def clean_images(scenario, outline=None, step=None):
     for image_ in retrieve_images():
         os.remove(image_)
 
