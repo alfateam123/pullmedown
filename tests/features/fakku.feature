@@ -11,15 +11,17 @@ Feature: download from fakku.net
     Scenario: Nice manga
        Given I want to download https://www.fakku.net/manga/high-girl-english
        When I download it
-       Then 5 images have been downloaded
+       # Then 5 images have been downloaded
+       Then pullmedown says it cannot find it
 
     Scenario: Nice doujin
        Given I want to download https://www.fakku.net/doujinshi/the-commanders-submission-english
        When I download it
-       Then 39 images have been downloaded
+       Then pullmedown says it cannot find it
+       # Then 39 images have been downloaded
 
     Scenario: Fakku Book
-       Given I want to download https://www.fakku.net/manga/curiosity-xxxed-the-cat-english
+       Given I want to download https://www.fakku.net/manga/meaty-minxes-english
        When I download it
        Then pullmedown says it's a book
 
