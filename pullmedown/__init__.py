@@ -4,7 +4,7 @@ import click
 import sys
 #from .musicforprogramming import MusicForProgrammingDownloader as MFPDownloader
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, filename=".pullmedown.log")
 
 @click.group()
 def main():

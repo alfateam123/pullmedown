@@ -4,6 +4,7 @@ from . import main
 import click
 import logging
 logging.basicConfig(level=logging.DEBUG, filename=".pullmedown.log")
+import re
 
 try:
     from html.parser import HTMLParser
@@ -14,6 +15,7 @@ except ImportError:
 class FakkuParser(HTMLParser):
 
     MOMOKA_THUMB_OF_NOTFOUND = "//t.fakku.net/assets/fakku-momoka-thumb.png"
+    FAKKU_SHOPIFY_URL = "//cdn.shopify.com/"
     FAKKU_BOOKS = "//store.fakku.net/"
 
     def __init__(self):
@@ -40,8 +42,9 @@ class FakkuParser(HTMLParser):
                     self.fakku_twitter_image = ""
                     self.fakku_type = "NOTFOUND"
                     logging.debug("oh wait, that's the 404 image. sigh.")
-                    #raise ValueErrori("the given URL is not accessible or does not exist.")
-                elif self.FAKKU_BOOKS in self.fakku_twitter_image:
+                    # raise ValueError("the given URL is not accessible or does not exist.")
+                elif ( self.FAKKU_BOOKS in self.fakku_twitter_image or
+                       self.FAKKU_SHOPIFY_URL in self.fakku_twitter_image):
                     self.fakku_twitter_image = ""
                     self.fakku_type = "FAKKUBOOK"
                     logging.debug("it's a book!")
@@ -97,8 +100,10 @@ def download(doujin_url):
         messages = {
             "NOTFOUND": "could not find enough information to download the doujin you asked for.",
             "FAKKUBOOK": "this is a Fakku Book. Throw some money to the screen, maybe it'll work :^",
-            "SUBSCRIPTION": "you have to subscribe in order to read this content."
+            "SUBSCRIPTION": "you have to subscribe in order to read this content.",
+            None: "could not find enough information to download the doujin you asked for."
         } 
+        logging.debug("fakku_type is: {0}".format(fp.fakku_type))
         print(messages[fp.fakku_type])
 
 

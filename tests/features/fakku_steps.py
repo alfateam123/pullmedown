@@ -4,7 +4,6 @@ import pexpect
 import os
 import six
 
-
 def create_fakku_process(url):
     return pexpect.spawn("pullmedown", args=["fakku", url])
 
@@ -42,19 +41,20 @@ def when_i_download_it(step):
 @step(u'Then pullmedown says it cannot find it')
 def then_pullmedown_says_it_cannot_find_it(step):
     lines = world.fakku_proc.before.splitlines()
-    assert ("could not find enough information to download"
-            " the doujin you asked for." in lines[-1])
+    assert (b"could not find enough information to download"
+            b" the doujin you asked for." in lines[-1])
 
 @step(u'Then pullmedown says it\'s a book')
 def then_pullmedown_says_its_a_book(step):
     lines = world.fakku_proc.before.splitlines()
-    assert ("this is a Fakku Book" in lines[-1])
+    print(lines)
+    assert (b"this is a Fakku Book" in lines[-1])
 
 @step(u'Then (\d+) images have been downloaded')
 def then_at_least_one_image_have_been_downloaded(step, number):
-    assert number_of_images(int(number)), "only {} images were downloaded instead".format(len(retrieve_images()))
+    assert number_of_images(int(number)), "only {0} images were downloaded instead".format(len(retrieve_images()))
 
 @step(u'Then pullmedown says you have to subscribe')
 def then_pullmedown_says_you_have_to_subscribe(step):
     lines = world.fakku_proc.before.splitlines()
-    assert ("subscribe" in lines[-1])
+    assert (b"subscribe" in lines[-1])

@@ -5,7 +5,7 @@ Manga
 * [SOON] batoto (start from the first, it will downloads all the available chapters)
 * [SOON] batoto (one chapter, you have to tell the image link and how many pages. modifiable for fakku)
 * [SOON] mangaeden (just one chapter at the time)
-* fakku
+* fakku (n  free content anymore, didn't subscribe to check legit downloads)
 
 sadpanda won't be supported, unless a saduser files a PR to add it.
 
