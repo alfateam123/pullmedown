@@ -1,11 +1,13 @@
 #!/usr/bin/env python
+import click
 import re
-import utils
-import argparse
+import os
 try:
     from html.parser import HTMLParser
 except ImportError:
     from HTMLParser import HTMLParser
+from . import main
+from . import utils
 
 """
 Downloader for Goodbye to Halos webcomic.
@@ -31,7 +33,7 @@ class GoodbyeToHalosParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag.lower() == "a":
-            if attrs.get("class", None) == "next":
+            if attrs.get("class", None) == "cc-next":
                 self.next_url = attrs["href"]
 
     def handle_endtag(self, tag):
@@ -43,14 +45,14 @@ class GoodbyeToHalosParser(HTMLParser):
             if attrs.get("id", None) == "cc-comic":
                 self.comic_image_url = attrs["src"]
 
-def save_image(image_url):
+def save_image(image_url, store_folder):
     if not image_url:
         return
 
-    image_path = image_url.split("/")[-1]
+    image_path = os.path.join(store_folder, image_url.split("/")[-1])
     utils.store(image_url, image_path, overwrite=False)
 
-def dump_whole():
+def dump_whole(folder):
     url = None
     parser = GoodbyeToHalosParser()
     next_found = True
@@ -67,14 +69,19 @@ def dump_whole():
         else:
             next_found = False
         print("downloading ", parser.comic_image_url)
-        save_image(parser.comic_image_url)
+        save_image(parser.comic_image_url, folder)
 
-if __name__=="__main__":
-    parser = argparse.ArgumentParser(description='MegaTokyo downloader')
-    parser.add_argument('action', metavar='action', nargs='?', help='Action (dump)')
-    args = vars(parser.parse_args())
+@main.command()
+@click.option("--folder", help="specify a folder to store the dump")
+@click.argument("action")
+def goodbyetohalos(action, folder):
+    #parser = argparse.ArgumentParser(description='MegaTokyo downloader')
+    #parser.add_argument('action', metavar='action', nargs='?', help='Action (dump)')
+    #args = vars(parser.parse_args())
 
-    if args['action'] == 'dump':
-        dump_whole()
+    if action == 'dump':
+        utils.create_folder(folder)
+
+        dump_whole(folder)
     else:
-        print('Sounds like you did something wrong... try -h')
+        print("the only supported `action` is `dump`")

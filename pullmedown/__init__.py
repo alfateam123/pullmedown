@@ -38,3 +38,4 @@ from .musicforprogramming import musicforprogramming
 from .generate_cbz import generatecbz
 from .hak5down import hak5
 from .imgur_downloader import imgur
+from .goodbye_to_halos import goodbyetohalos
