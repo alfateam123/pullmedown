@@ -1,3 +1,4 @@
+from os import mkdir
 from os.path import exists
 import requests
 import json
@@ -53,6 +54,10 @@ def get_page_ninja(url, is_json=False, method="get", parameters=None):
     s=requests.Session()
     resp=s.send(prep, proxies=proxies())
     return resp.json() if is_json else resp.text
+
+def create_folder(folder):
+    if not exists(folder):
+        mkdir(folder)
 
 store = store_ninja
 get_page = get_page_ninja
