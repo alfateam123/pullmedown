@@ -35,7 +35,6 @@ def main():
 #        MFPDownloader().download_episode(number)
 
 from .musicforprogramming import musicforprogramming
-from .fakku import fakku
 from .generate_cbz import generatecbz
 from .hak5down import hak5
 from .imgur_downloader import imgur
