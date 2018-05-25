@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import re
-import utils
-import argparse
+from . import utils
+from . import main 
+import click
+import os
 
 """
 Downloader for MegaTokyo webcomic.
@@ -21,30 +23,36 @@ def last_comic(download=True, return_number=False):
     if return_number:
         return strip_number
 
-def dump_single(number, image_format=None):
+def dump_single(number, image_format=None, folder="."):
     if not image_format:
         text = utils.get_page('http://megatokyo.com/strip/{0}'.format(number)) #retrieving the image format
         #print (strip_image(text))
         strip_name = strip_image(text)[0]
     else:
         strip_name = str(number)+image_format
-    utils.store('http://megatokyo.com/strips/{0}'.format(strip_name), strip_name, overwrite=False)
+    store_path = os.path.join(folder, strip_name)
+    utils.store('http://megatokyo.com/strips/{0}'.format(strip_name), store_path, overwrite=False)
 
-def dump_whole():
+def dump_whole(folder="."):
     for strip_num in xrange(1, last_comic(download=False, return_number=True)+1):
-        dump_single(strip_num)
+        dump_single(strip_num, folder=folder)
 
-if __name__=="__main__":
-    parser = argparse.ArgumentParser(description='MegaTokyo downloader')
-    parser.add_argument('action', metavar='action', nargs='?', help='Action (dump, download)')
-    parser.add_argument('number', metavar='number', nargs='?', help='Issue to be downloaded with the "download" action')
-    args = vars(parser.parse_args())
-
-    if args['action'] == 'dump':
-        dump_whole()
-    elif args['action'] == 'list':
-        print("{0} episodes of MegaTokyo have been released".format(last_comic(False, True)))
-    elif args['action'] == 'download' and args['number']:
-        dump_single(int(args['number']))
+@main.command()
+@click.option("--number", help="only valid if action = download")
+@click.option("--folder", help="specify a folder to store the dump")
+@click.argument("action")
+def megatokyo(action, number, folder):
+    print(action, number, folder)
+    if folder:
+        utils.create_folder(folder)
     else:
-        print('Sounds like you did something wrong... try -h')
+        folder = "."
+
+    if action == 'dump':
+        dump_whole(folder)
+    elif action == 'list':
+        print("{0} episodes of MegaTokyo have been released".format(last_comic(False, True)))
+    elif action == 'download' and number:
+        dump_single(int(number), folder=folder)
+    else:
+        print("unrecognized action (dump, download --number)")
