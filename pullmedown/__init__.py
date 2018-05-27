@@ -36,6 +36,5 @@ def main():
 
 from .musicforprogramming import musicforprogramming
 from .generate_cbz import generatecbz
-from .imgur_downloader import imgur
 from .goodbye_to_halos import goodbyetohalos
 from .mt_downloader import megatokyo
