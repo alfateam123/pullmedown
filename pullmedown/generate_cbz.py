@@ -2,6 +2,8 @@
 import os, re, sys, shutil
 from zipfile import ZipFile
 from math import log
+import click
+from . import main
 
 def format(num, zeroes):
     return "0"*(zeroes-len(str(num)))+str(num)
@@ -9,9 +11,16 @@ def format(num, zeroes):
 def getformat(fname):
     return re.findall(".[\w\d]+$", fname)[0]
 
-if __name__ == "__main__":
-    folderpath = sys.argv[1]
+#if __name__ == "__main__":
+@main.command()
+@click.argument("folderpath")
+def generatecbz(folderpath):
+    #folderpath = sys.argv[1]
     counter = 1
+
+    if not os.path.exists(folderpath):
+        print("this folder does not exist.")
+        return sys.exit(1)
 
     with ZipFile(folderpath+".cbz", "w") as ebook:
         for path, dirs, files in os.walk(folderpath):
